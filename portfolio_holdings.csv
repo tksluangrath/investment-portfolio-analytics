@@ -1,0 +1,11 @@
+Ticker,Shares,Cost_Basis,Sector
+AAPL,6,154,Technology
+MSFT,11,207,Technology
+NVDA,29,399,Technology
+GOOGL,18,1135,Communication Services
+META,18,261,Communication Services
+AMZN,25,2916,Consumer Discretionary
+TSLA,24,817,Consumer Discretionary
+JPM,10,168,Financials
+JNJ,17,168,Healthcare
+XOM,7,85,Energy
