@@ -1,134 +1,116 @@
-# 📊 Investment Portfolio Analytics Platform
+# Investment Portfolio Analytics Platform
 
-## Overview
-The **Investment Portfolio Analytics Platform** is an end-to-end analytics project that evaluates portfolio performance, attribution, and risk using historical market data. The project combines a Python data pipeline with an interactive Tableau dashboard to deliver clear, finance-focused insights.
+A project that analyzes portfolio performance, risk, and attribution using historical market data. Built with Python for the data pipeline and Tableau for visualization. I'm building this in phases, starting with basic performance metrics and eventually expanding into deeper risk analytics.
 
-The project is structured in **phases**, allowing incremental expansion from valuation and performance reporting into deeper risk analytics.
+## What This Does
 
----
-
-## Objectives
-- Analyze portfolio market value and performance over time  
-- Identify key contributors to unrealized gains and losses  
-- Provide clear, executive-style KPIs as of the latest available market date  
-- Lay the foundation for portfolio risk and volatility analysis  
-
----
+The platform lets you:
+- Track portfolio market value and performance over time
+- See which positions are driving gains or losses
+- View executive-level KPIs as of the most recent trading date
+- Lay groundwork for portfolio risk and volatility analysis (coming in Phase 2)
 
 ## Data Sources
-- **Yahoo Finance** (via `yfinance`)
-  - Historical adjusted closing prices for selected equities
-- **Simulated Portfolio Holdings**
-  - Randomized share counts and cost basis for demonstration purposes
 
----
+**Market data:** Yahoo Finance (pulled via `yfinance`) for historical adjusted closing prices
 
+**Portfolio holdings:** Simulated data with randomized share counts and cost basis - this is for demonstration purposes since I don't have access to real portfolio data
 
----
+## The Datasets
 
-## Key Datasets
+### portfolio_holdings.csv
+The base portfolio with simulated positions.
 
-### `portfolio_holdings.csv`
-Simulated portfolio holdings used as the base portfolio.
-
-| Column | Description |
-|------|------------|
-| Ticker | Stock ticker symbol |
-| Shares | Number of shares held |
-| Cost_Basis | Purchase price per share |
+| Column | What it is |
+|--------|-----------|
+| Ticker | Stock symbol |
+| Shares | Number of shares owned |
+| Cost_Basis | What you paid per share |
 | Sector | Industry sector |
 
----
+### prices_long.csv
+Daily adjusted closing prices in long format - basically every ticker's price history stacked vertically.
 
-### `prices_long.csv`
-Daily adjusted closing prices in long format.
-
-| Column | Description |
-|------|------------|
+| Column | What it is |
+|--------|-----------|
 | Date | Trading date |
 | Ticker | Stock ticker |
 | Adj_Close | Adjusted closing price |
 
----
+### portfolio_prices.csv
+This is the merged dataset that Tableau uses for all the valuation and performance analysis.
 
-### `portfolio_prices.csv`
-Merged dataset used directly in Tableau for valuation and performance analysis.
+| Column | What it is |
+|--------|-----------|
+| Market_Value | Current value (shares × price) |
+| Cost_Value | What you paid (shares × cost basis) |
+| Unrealized_PnL | Profit/loss (market value - cost) |
+| Unrealized_PnL_Pct | P&L as a percentage |
+| Cumulative_Return | Return from the first date |
+| As_Of_Date | When the data was generated |
 
-| Column | Description |
-|------|------------|
-| Market_Value | Shares × Adjusted Price |
-| Cost_Value | Shares × Cost Basis |
-| Unrealized_PnL | Market Value − Cost Value |
-| Unrealized_PnL_Pct | Unrealized P&L / Cost Value |
-| Cumulative_Return | Return relative to first observation |
-| As_Of_Date | Data generation date |
+### returns_long.csv (Phase 2)
+Daily returns calculated for future risk and volatility work.
 
----
-
-### `returns_long.csv` (Phase 2)
-Daily returns generated for future risk and volatility analysis.
-
-| Column | Description |
-|------|------------|
+| Column | What it is |
+|--------|-----------|
 | Daily_Return | Day-over-day percentage return |
 
----
+## The Tableau Dashboard (Phase 1)
 
-## Tableau Dashboard (Phase 1)
+Right now the dashboard shows:
+- Total portfolio value (KPI)
+- Total unrealized P&L (KPI)
+- Portfolio ROI % (KPI)
+- Portfolio market value over time (line chart)
+- Biggest winners and losers by position (bar chart)
+- Portfolio breakdown by sector (pie/tree map)
 
-### Key Views
-- **Total Portfolio Value (KPI)**
-- **Total Unrealized P&L (KPI)**
-- **Portfolio ROI % (KPI)**
-- **Portfolio Market Value Over Time**
-- **Largest Unrealized Gains & Losses by Security**
-- **Portfolio Allocation by Sector**
+**Design choices I made:**
+- KPIs show the latest trading date only (what's the portfolio worth right now?)
+- Time-series charts show full history (so you can see trends)
+- Color-coded gains (green) vs losses (red)
+- Clear labels showing assumptions and date context
 
-### Design Principles
-- Snapshot KPIs filtered to the **latest trading date**
-- Time-series charts unfiltered to preserve historical trends
-- Conditional coloring for gains vs losses
-- Clear labeling of assumptions and date context
+## What's Coming in Phase 2: Risk & Volatility
 
----
-
-## Phase 2: Risk & Volatility Analysis (Planned)
-Phase 2 extends the platform into portfolio risk analytics using daily returns.
-
-Planned additions:
-- Volatility by security (annualized)
+Once Phase 1 is solid, I'll add:
+- Volatility by security (annualized standard deviation)
 - Rolling volatility over time
-- Drawdown analysis
+- Drawdown analysis (how much the portfolio has fallen from peaks)
 - Risk vs return scatterplots
-- Portfolio-level risk KPIs
+- Portfolio-level risk metrics like Sharpe ratio
+
+## Tools Used
+
+- **Python:** pandas, numpy, yfinance for data processing
+- **Tableau:** Dashboard design and interactive visualizations
+- **GitHub:** Version control
+
+## Important Assumptions
+
+A few things to keep in mind:
+- Portfolio holdings are simulated - this is a demonstration project
+- I'm applying current holdings retroactively to historical prices (not modeling how the portfolio actually evolved)
+- No transaction costs, dividends, or rebalancing included
+- This is for learning and showcasing analytics skills, not real investment advice
+
+## What I'd Add Later
+
+Beyond Phase 2, some ideas:
+- Sharpe ratio and other risk-adjusted return metrics
+- Sector-level risk contribution analysis
+- Correlation heatmaps between positions
+- Scenario stress testing (what happens if the market drops 20%?)
+
+## Contact
+
+**Author**: Terrance Luangrath
+
+**📧 Email:** [tksluangrath@gmail.com](mailto:tksluangrath@gmail.com)  
+**💼 LinkedIn:** [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/terranceluangrath/)  
+**👨‍💻 GitHub:** [![GitHub](https://img.shields.io/badge/GitHub-181717.svg?logo=github&logoColor=white)](https://github.com/tksluangrath)
 
 ---
 
-## Tools & Technologies
-- **Python**: pandas, numpy, yfinance
-- **Tableau**: Dashboard design and interactive analytics
-- **GitHub**: Version control and documentation
-
----
-
-## Assumptions & Notes
-- Portfolio holdings are simulated for demonstration purposes
-- Historical performance applies **current holdings** to past prices
-- No transaction costs, dividends, or rebalancing are modeled
-
----
-
-## Future Enhancements
-- Sharpe ratio and risk-adjusted metrics
-- Sector-level risk contribution
-- Correlation heatmaps
-- Scenario stress testing
-
----
-
-## Author
-**Terrance Luangrath**  
-MS in Data Science (in progress)  
-Focus: Analytics, Financial Data Science, and Visualization
-
-
+*MS in Data Science (in progress) | Focus: Analytics, Financial Data Science, and Visualization*
